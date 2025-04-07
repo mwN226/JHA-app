@@ -1,0 +1,107 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>JHA Generator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 30px;
+      background: #f2f2f2;
+    }
+    h2 {
+      color: #333;
+    }
+    select, button {
+      display: block;
+      width: 100%;
+      margin-bottom: 20px;
+      padding: 10px;
+      font-size: 16px;
+    }
+    #output {
+      background: #fff;
+      padding: 15px;
+      border: 1px solid #ccc;
+      white-space: pre-wrap;
+    }
+    .buttons {
+      display: flex;
+      gap: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h2>Job Hazard Analysis Generator</h2>
+
+  <label for="task">Task:</label>
+  <select id="task">
+    <option>Working at height</option>
+    <option>Manual handling</option>
+    <option>Hot work</option>
+    <option>Confined space entry</option>
+  </select>
+
+  <label for="tools">Tools:</label>
+  <select id="tools">
+    <option>Ladder</option>
+    <option>Harness</option>
+    <option>Grinder</option>
+    <option>Gas detector</option>
+  </select>
+
+  <label for="hazards">Hazards:</label>
+  <select id="hazards">
+    <option>Falls</option>
+    <option>Noise</option>
+    <option>Fire</option>
+    <option>Low oxygen</option>
+  </select>
+
+  <label for="controls">Controls:</label>
+  <select id="controls">
+    <option>Use PPE</option>
+    <option>Spotter present</option>
+    <option>Permit required</option>
+    <option>Gas monitoring</option>
+  </select>
+
+  <button onclick="generateJHA()">Generate JHA</button>
+
+  <div id="output"></div>
+
+  <div class="buttons">
+    <button onclick="copyText()">Copy</button>
+    <button onclick="downloadPDF()">Save as PDF</button>
+  </div>
+
+  <script>
+    function generateJHA() {
+      const task = document.getElementById("task").value;
+      const tools = document.getElementById("tools").value;
+      const hazards = document.getElementById("hazards").value;
+      const controls = document.getElementById("controls").value;
+
+      const result = `Job Hazard Analysis\n\nTask: ${task}\nTools: ${tools}\nHazards: ${hazards}\nControls: ${controls}`;
+      document.getElementById("output").innerText = result;
+    }
+
+    function copyText() {
+      const text = document.getElementById("output").innerText;
+      navigator.clipboard.writeText(text);
+      alert("JHA copied to clipboard!");
+    }
+
+    function downloadPDF() {
+      const text = document.getElementById("output").innerText;
+      const blob = new Blob([text], { type: "application/pdf" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "JHA.pdf";
+      link.click();
+    }
+  </script>
+</body>
+</html>
